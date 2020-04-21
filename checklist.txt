@@ -1,0 +1,2 @@
+1- Checar quais instanceids pertencem a qual cadeia (familia origem -> familia dest.)  e aplicar na lista
+2- Ajustar script p gerar log
