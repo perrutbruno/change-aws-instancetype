@@ -17,9 +17,9 @@ for line in lines:
 
 def change_instancetype(instanceid):
     # Change the instance type
-    client.modify_instance_attribute(InstanceId=instanceid, Attribute='instanceType', Value='m5.large')
+    client.modify_instance_attribute(InstanceId=instanceid, Attribute='instanceType', Value='m5.xlarge')
     f = open("logs.txt", "a")
-    f.write(f"instancia {instanceid} trocado instancetype para m5.large!")
+    f.write(f"instancia {instanceid} trocado instancetype para m5.xlarge!")
     f.close()
 
 
