@@ -1,4 +1,4 @@
-import boto3
+import boto3, time
 
 client = boto3.client('ec2')
 
@@ -22,6 +22,11 @@ def change_instancetype(instanceid):
     f.write(f"instancia {instanceid} trocado instancetype para t2.medium!")
     f.close()
 
+def shutdown_instance(instanceid):
+    client.stop_instances(InstanceIds=instanceid, DryRun=True)
+
+def start_instance(instanceid):
+    client.start_instances(InstanceIds=instanceid, DryRun=True)
 
 def get_status_code(instanceid):
     describe_instances = client.describe_instances(
@@ -47,10 +52,25 @@ for index in instance_list:
     if status == 'stopped':
         try:
             change_instancetype(index)
+            start_instance(index)
         except Exception as e:
             pass
+    elif status == 'started':
+        shutdown_instance(index)
+        time.sleep(120)
+        try:
+            change_instancetype(index)
+            start_instance(index)
+
+        except Exception as e:
+            f = open("logs.txt", "a")
+            f.write("************************************!")
+            f.write(f"instancia {index} nao esta desligada, favor rodar novamente mais tarde. Except {e}")
+            f.write("************************************!")
+            f.close()
+
     else:
-        print(f'Instance {index} is not in stopped state')
+        print(f'Instance {index} is not in stopped / started state!')
         f = open("logs.txt", "a")
-        f.write(f"instancia {index} desligada!")
+        f.write(f"Instance {index} is not in stopped / started state!")
         f.close()
