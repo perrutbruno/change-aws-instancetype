@@ -55,7 +55,7 @@ for index in instance_list:
             start_instance(index)
         except Exception as e:
             pass
-    elif status == 'started':
+    elif status == 'running':
         shutdown_instance(index)
         time.sleep(120)
         try:
