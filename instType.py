@@ -23,10 +23,10 @@ def change_instancetype(instanceid):
     f.close()
 
 def shutdown_instance(instanceid):
-    client.stop_instances(InstanceIds=instanceid, DryRun=True)
+    client.stop_instances(InstanceIds=[instanceid])
 
 def start_instance(instanceid):
-    client.start_instances(InstanceIds=instanceid, DryRun=True)
+    client.start_instances(InstanceIds=[instanceid])
 
 def get_status_code(instanceid):
     describe_instances = client.describe_instances(
